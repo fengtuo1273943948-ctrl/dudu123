@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dudu Boutique · Luxury Watches & Leather</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: #fff;
+  color: #1d1d1f;
+  -webkit-font-smoothing: antialiased;
+}
+:root {
+  --bg-light: #f5f5f7;
+  --text-p: #1d1d1f;
+  --text-s: #86868b;
+  --accent: #b8a07e;
+  --border: #e8e8ed;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --card-r: 12px;
+  --img-r: 20px;
+  --tran: all 0.35s cubic-bezier(0.25,0.1,0.25,1);
+}
+
+/* navigation */
+.nav {
+  position: fixed; top:0; left:0; width:100%; height:56px;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(18px);
+  border-bottom:1px solid var(--border);
+  z-index:9999; padding:0 24px;
+}
+.nav-inner {
+  max-width:1100px; margin:0 auto; height:100%;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.logo {
+  font-size:24px;        
+  font-weight:600;       
+  letter-spacing:1px;    
+  cursor:pointer;
+  color: var(--text-p);
+}
+.logo:hover {
+  color: var(--accent);
+}
+.nav-links { display:flex; gap:32px; align-items: center; }
+.nav-links a { font-size:15px; font-weight:300; color:var(--text-p); transition:var(--tran); cursor:pointer; }
+.nav-links a:hover { color:var(--accent); }
+
+/* dropdown */
+.dropdown {
+  position: relative;
+}
+.dropdown-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 12px 0;
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 9999;
+}
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.dropdown-group {
+  padding: 0 16px;
+}
+.dropdown-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-s);
+  margin-bottom: 8px;
+  padding: 4px 0;
+}
+.dropdown-menu a {
+  display: block;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-p);
+  border-radius: 8px;
+  margin-bottom: 2px;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+.dropdown-menu a:hover {
+  background: var(--bg-light);
+  color: var(--accent);
+}
+.dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0;
+}
+
+/* hero */
+.hero {
+  height:100vh;
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
+              url('https://picsum.photos/id/1048/1920/1080');
+  background-size: cover;      
+  background-position: center; 
+  background-attachment: fixed;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:0 24px;
+  color: #fff;
+}
+.hero h1 {
+  font-size:48px; font-weight:500; line-height:1.05; letter-spacing:-0.3px;
+  margin-bottom:16px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.hero p {
+  font-size:21px; font-weight:300; color:#fff; opacity:0.9; margin-bottom:32px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.btn {
+  padding:10px 22px; background:var(--accent); color:#fff;
+  border-radius:var(--card-r); font-size:15px; font-weight:400;
+  border:none; cursor:pointer; transition:var(--tran);
+}
+.btn:hover { background:#a89272; }
+
+/* layout */
+.section {
+  max-width:1100px; margin:140px auto; padding:0 64px;
+  scroll-margin-top: 80px;
+}
+.section-title {
+  text-align:center; font-size:36px; font-weight:500;
+  margin-bottom:20px; letter-spacing:-0.3px;
+  cursor: pointer;
+  transition: var(--tran);
+}
+.section-title:hover {
+  color: var(--accent);
+  transform: scale(1.03);
+}
+.section-desc {
+  text-align: center;
+  color: var(--text-s);
+  max-width: 600px;
+  margin: 0 auto 60px;
+  line-height: 1.6;
+}
+
+/* product grid */
+.product-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:40px;
+}
+.product-card {
+  background:#fff; border-radius:var(--card-r); overflow:hidden;
+  box-shadow:var(--shadow); transition:var(--tran); cursor:pointer;
+}
+.product-card:hover {
+  transform:translateY(-6px); box-shadow:0 4px 20px rgba(0,0,0,0.12);
+}
+.product-img {
+  width:100%; height:320px; object-fit:cover; transition:var(--tran);
+  cursor:zoom-in;
+}
+.product-info { padding:24px; text-align: center; }
+.product-name {
+  display: none; /* hidden */
+}
+.product-price {
+  font-size:19px; font-weight:600; color:var(--accent);
+  margin: 0;
+}
+
+/* split layout */
+.split {
+  display:flex; align-items:center; gap:80px; margin-bottom:140px;
+}
+.split.reverse { flex-direction:row-reverse; }
+.split-col { flex:1; }
+.split-img {
+  width:100%; border-radius:var(--img-r);
+}
+.split h2 {
+  font-size:28px; font-weight:500; margin-bottom:16px;
+}
+.split p {
+  font-size:17px; font-weight:300; color:var(--text-s); line-height:1.5; margin-bottom:24px;
+}
+
+/* modals */
+.modal {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.3); z-index:9999; display:none;
+  align-items:center; justify-content:center; animation:fade 0.4s;
+}
+.modal.show { display:flex; }
+.modal-box {
+  background:#fff; width:90%; max-width:420px; border-radius:var(--card-r);
+  padding:32px; text-align:center;
+}
+
+.image-modal .modal-box {
+  max-width:90%; max-height:90vh; padding:0; background:transparent;
+}
+.big-img {
+  max-width:100%; max-height:90vh; border-radius:var(--img-r);
+  cursor:zoom-out;
+}
+.image-close {
+  position:absolute; top:20px; right:20px;
+  width:40px; height:40px; background:rgba(255,255,255,0.2);
+  border-radius:50%; color:#fff; font-size:24px; cursor:pointer;
+  display:grid; place-items:center;
+}
+
+/* contact */
+.contact-list {
+  text-align:left; margin:20px 0;
+}
+.contact-item {
+  display:flex; align-items:center; gap:12px; padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.contact-item:last-child { border-bottom:none; }
+.contact-icon {
+  width:24px; height:24px; background:var(--accent); border-radius:50%;
+  display:grid; place-items:center; color:#fff; font-size:12px;
+}
+/* 二维码容器 */
+.qrcodes-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0 10px;
+  flex-wrap: wrap;
+}
+.qr-img {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--img-r);
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
+/* brand page */
+.brand-page { 
+  display:none; 
+  padding:100px 24px 60px;
+  min-height: 100vh;
+}
+.brand-header {
+  max-width: 1100px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+.brand-header h1 {
+  font-size:48px; font-weight:500; margin-bottom:16px;
+  color: var(--accent);
+}
+.brand-info {
+  max-width: 800px;
+  margin: 0 auto 60px;
+  text-align: center;
+  line-height: 1.8;
+  color: var(--text-s);
+  font-size: 16px;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color:var(--accent);
+  cursor:pointer;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: var(--bg-light);
+  transition: var(--tran);
+}
+.back-btn:hover {
+  background: #e8e8ed;
+}
+.brand-product-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  color: var(--text-p);
+}
+
+/* footer */
+.footer {
+  background:var(--bg-light); padding:60px 24px; text-align:center;
+  font-size:13px; font-weight:300; color:var(--text-s);
+}
+
+@keyframes fade { from{opacity:0;} to{opacity:1;} }
+
+@media (max-width:768px) {
+  .section { padding:0 24px; margin:90px auto; }
+  .split, .split.reverse { flex-direction:column; gap:40px; }
+  .hero h1 { font-size:36px; }
+  .nav-links { gap:16px; }
+  .brand-header h1 { font-size:36px; }
+  .logo { font-size: 20px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- navigation -->
+<div class="nav">
+  <div class="nav-inner">
+    <div class="logo" onclick="showHome()">Dudu Boutique</div>
+    <div class="nav-links">
+      <a onclick="showHome()">Home</a>
+      <div class="dropdown">
+        <a class="dropdown-toggle">Products ▾</a>
+        <div class="dropdown-menu">
+          <div class="dropdown-group">
+            <div class="dropdown-title">Watches</div>
+            <a href="#cartier">Cartier</a>
+            <a href="#vacheron">Vacheron Constantin</a>
+            <a href="#rolex">Rolex</a>
+            <a href="#patek">Patek Philippe</a>
+            <a href="#longines">Longines</a>
+            <a href="#omega">Omega</a>
+            <a href="#iwc">IWC</a>
+            <a href="#jaeger">Jaeger‑LeCoultre</a>
+            <a href="#ap">Audemars Piguet</a>
+            <a href="#richard">Richard Mille</a>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-group">
+            <div class="dropdown-title">Leather Goods</div>
+            <a href="#lv">LV</a>
+            <a href="#hermes">Hermès</a>
+            <a href="#chanel">Chanel</a>
+          </div>
+        </div>
+      </div>
+      <a onclick="openContact()">Contact</a>
+    </div>
+  </div>
+</div>
+
+<!-- home page -->
+<div id="homePage">
+  <div class="hero">
+    <h1>Craftsmanship · Timeless Icons</h1>
+    <p>Curated global luxury watches & leather goods</p>
+    <button class="btn" onclick="document.querySelector('.section').scrollIntoView()">Explore</button>
+  </div>
+
+  <!-- brand sections (auto-rendered) -->
+  <section class="section" id="cartier"><h2 class="section-title" onclick="goToBrand('Cartier')">Cartier</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="vacheron"><h2 class="section-title" onclick="goToBrand('Vacheron Constantin')">Vacheron Constantin</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="rolex"><h2 class="section-title" onclick="goToBrand('Rolex')">Rolex</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="patek"><h2 class="section-title" onclick="goToBrand('Patek Philippe')">Patek Philippe</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="longines"><h2 class="section-title" onclick="goToBrand('Longines')">Longines</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="omega"><h2 class="section-title" onclick="goToBrand('Omega')">Omega</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="iwc"><h2 class="section-title" onclick="goToBrand('IWC')">IWC</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="jaeger"><h2 class="section-title" onclick="goToBrand('Jaeger‑LeCoultre')">Jaeger‑LeCoultre</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="ap"><h2 class="section-title" onclick="goToBrand('Audemars Piguet')">Audemars Piguet</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="richard"><h2 class="section-title" onclick="goToBrand('Richard Mille')">Richard Mille</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="lv"><h2 class="section-title" onclick="goToBrand('LV')">LV</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="hermes"><h2 class="section-title" onclick="goToBrand('Hermès')">Hermès</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+  <section class="section" id="chanel"><h2 class="section-title" onclick="goToBrand('Chanel')">Chanel</h2><p class="section-desc"></p><div class="product-grid"></div></section>
+
+  <!-- craftsmanship story -->
+  <section class="section">
+    <div class="split">
+      <div class="split-col">
+        <img src="https://picsum.photos/900/600?random=100" class="split-img">
+      </div>
+      <div class="split-col">
+        <h2>Artisanal Excellence</h2>
+        <p>Each piece is crafted from premium materials and refined by hand, embodying centuries of aesthetic heritage — for an uncompromising sense of luxury.</p>
+        <button class="btn">Learn More</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- brand detail page -->
+<div id="brandPage" class="brand-page">
+  <div class="section">
+    <div class="back-btn" onclick="showHome()">← Back to Home</div>
+    <div class="brand-header">
+      <h1 id="brandTitle"></h1>
+    </div>
+    <div class="brand-info" id="brandDesc"></div>
+    <h3 class="brand-product-title">Full Collection</h3>
+    <div class="product-grid" id="brandProductGrid"></div>
+  </div>
+</div>
+
+<!-- image modal -->
+<div class="modal image-modal" id="imageModal">
+  <span class="image-close" onclick="closeImage()">×</span>
+  <img id="bigImage" class="big-img" onclick="closeImage()">
+</div>
+
+<!-- contact modal — with WhatsApp numbers + 3 QR codes -->
+<div class="modal" id="contactModal">
+  <div class="modal-box">
+    <h3>Contact Us</h3>
+    <div class="contact-list">
+      <div class="contact-item">
+        <div class="contact-icon">WA</div>
+        <div>WhatsApp: +86 136 0244 1734</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">WA</div>
+        <div>WhatsApp: +86 195 8432 3467</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">WA</div>
+        <div>WhatsApp: +86 198 7271 9150</div>
+      </div>
+    </div>
+    <!-- 三张二维码图片 -->
+    <div class="qrcodes-container">
+      <img src="https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/bbeedb623c874ec3a2bf9c66daf5b532.jpg~tplv-a9rns2rl98-24:720:720.jpg?lk3s=8e244e95&rcl=202604180444562B2FF4FF2EB8382126CF&rrcfp=8a172a1a&x-expires=1777063496&x-signature=OP9fz8i9gDxRfadHFvJM6HLdDx4%3D" alt="QR Code 1" class="qr-img">
+      <img src="https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/1fa76036a93f435c8b024a9e3dca96d5.jpg~tplv-a9rns2rl98-24:720:720.jpg?lk3s=8e244e95&rcl=202604180444562B2FF4FF2EB8382126CF&rrcfp=8a172a1a&x-expires=1777063496&x-signature=Ez8sCVaq%2Bjw8G43MXLAAhHTDG%2Bc%3D" alt="QR Code 2" class="qr-img">
+      <img src="https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/7603d53e23844f4c8d36c8ad96b2bfde.jpg~tplv-a9rns2rl98-24:720:720.jpg?lk3s=8e244e95&rcl=202604180444562B2FF4FF2EB8382126CF&rrcfp=8a172a1a&x-expires=1777063496&x-signature=njai3hGbHWI0A6THWIS6DO%2FNHKY%3D" alt="QR Code 3" class="qr-img">
+    </div>
+    <button class="close-modal" onclick="closeContact()">Close</button>
+  </div>
+</div>
+
+<!-- footer -->
+<div class="footer">
+  <p>Dudu Boutique © 2025 All Rights Reserved</p>
+  <br>
+  <p>Contact · Shipping · Privacy Policy</p>
+</div>
+
+<script>
+// ==============================================
+// 🚀 CONFIG — All images preserved, only UI text translated to English
+// ==============================================
+const CONFIG = {
+  // 100% 匹配你的文件夹结构和命名规则
+  products: (function() {
+    const list = [];
+    // 品牌配置：品牌名 → 文件夹名 → 图片数量
+    const brands = [
+      { name: "Cartier", folder: "cartier", count: 19 },
+      { name: "Vacheron Constantin", folder: "vacheron", count: 18 },
+      { name: "Rolex", folder: "rolex", count: 27 },
+      { name: "Patek Philippe", folder: "patek", count: 45 },
+      { name: "Longines", folder: "longines", count: 11 },
+      { name: "Omega", folder: "omega", count: 13 },
+      { name: "IWC", folder: "iwc", count: 12 },
+      { name: "Jaeger-LeCoultre", folder: "jaeger", count: 8 },
+      { name: "Audemars Piguet", folder: "ap", count: 4 },
+      { name: "Richard Mille", folder: "richard", count: 7 },
+      { name: "LV", folder: "lv", count: 55 },
+      { name: "Hermès", folder: "hermes", count: 10 },
+      { name: "Chanel", folder: "chanel", count: 29 }
+    ];
+
+    let globalId = 1;
+    brands.forEach(brand => {
+      for (let i = 1; i <= brand.count; i++) {
+        list.push({
+          id: globalId++,
+          name: "",
+          brand: brand.name,
+          // 完全匹配你的命名：cartier (1).jpg
+          img: `./images/${brand.folder}/${brand.folder} (${i}).jpg`
+        });
+      }
+    });
+    return list;
+  })(),
+
+  // 品牌介绍保持不变
+  brandIntro: {
+    "Cartier": "Founded in Paris in 1847, Cartier is a world-renowned luxury watch and jewelry brand, celebrated for its iconic Ballon Bleu, Tank, and Santos collections.",
+    "Vacheron Constantin": "Established in Geneva in 1755, Vacheron Constantin is the world's oldest continuously operating watch manufacturer.",
+    "Rolex": "A Swiss luxury watch icon, synonymous with precision, reliability, durability, and exceptional value retention.",
+    "Patek Philippe": "Universally regarded as the 'blue-blooded aristocrat' of haute horlogerie, Patek Philippe stands at the pinnacle of fine watchmaking.",
+    "Longines": "Founded in 1832 in Switzerland, Longines combines elegant design with outstanding value in the luxury segment.",
+    "Omega": "Established in 1848 in Biel, Switzerland, Omega is renowned for precision timing and innovation — official timekeeper of the Olympic Games and James Bond's choice.",
+    "IWC": "A luxury manufacture from Schaffhausen, IWC is known for robust, masculine designs and practical complications.",
+    "Jaeger-LeCoultre": "A premier watchmaking manufacture that invented the world's first ultra-thin movement and the first reversible watch.",
+    "Audemars Piguet": "Founded in 1875 in Switzerland, Audemars Piguet's Royal Oak collection pioneered the luxury sports watch.",
+    "Richard Mille": "Dubbed the 'billionaire's handshake,' Richard Mille is famed for extreme lightweight materials and avant-garde technical design.",
+    "LV": "A premier French luxury house, famous for its iconic monogram canvas and stylish, functional leather goods and luggage.",
+    "Hermès": "A top-tier French luxury brand celebrated worldwide for its exquisite handcrafted leather goods.",
+    "Chanel": "A classic French luxury maison, cherished for its elegant, timeless, and sophisticated design philosophy."
+  }
+};
+// ==============================================
+// Logic — unchanged, only text replaced above
+// ==============================================
+const products = CONFIG.products;
+const brandIntro = CONFIG.brandIntro;
+let currentBrand = '';
+
+function renderAllProducts() {
+  Object.keys(brandIntro).forEach(brand => {
+    const section = document.querySelector(`#${getBrandId(brand)} .product-grid`);
+    const desc = document.querySelector(`#${getBrandId(brand)} .section-desc`);
+    if(desc) desc.textContent = brandIntro[brand];
+    
+    const brandProducts = products.filter(p => p.brand === brand);
+    if(section) section.innerHTML = brandProducts.map(p => `
+      <div class="product-card">
+        <img src="${p.img}" class="product-img" data-src="${p.img}">
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-price">Private Quote</div>
+        </div>
+      </div>
+    `).join('');
+  });
+}
+
+function getBrandId(name){
+  const map = {"Cartier":"cartier","Vacheron Constantin":"vacheron","Rolex":"rolex","Patek Philippe":"patek","Longines":"longines","Omega":"omega","IWC":"iwc","Jaeger-LeCoultre":"jaeger","Audemars Piguet":"ap","Richard Mille":"richard","LV":"lv","Hermès":"hermes","Chanel":"chanel"};
+  return map[name] || name.toLowerCase().replace(/\s+/g,'');
+}
+
+function initHome() { renderAllProducts(); bindImageClick(); }
+function createProductCard(p) { return `
+  <div class="product-card"><img src="${p.img}" class="product-img" data-src="${p.img}"><div class="product-info"><div class="product-name">${p.name}</div><div class="product-price">Private Quote</div></div></div>
+`;}
+function goToBrand(brand) {
+  currentBrand = brand; 
+  homePage.style.display = 'none'; 
+  brandPage.style.display = 'block';
+  brandTitle.innerText = brand; 
+  brandDesc.innerText = brandIntro[brand] || '';
+  brandProductGrid.innerHTML = products.filter(p=>p.brand===brand).map(p=>createProductCard(p)).join('');
+  bindImageClick();
+}
+function showHome() { brandPage.style.display = 'none'; homePage.style.display = 'block'; window.scrollTo(0,0); }
+function bindImageClick() {
+  document.querySelectorAll('.product-img').forEach(img=>{img.onclick=(e)=>{e.stopPropagation();bigImage.src=img.dataset.src;imageModal.classList.add('show');}});
+}
+function closeImage() { imageModal.classList.remove('show'); }
+function openContact() { contactModal.classList.add('show'); }
+function closeContact() { contactModal.classList.remove('show'); }
+
+initHome();
+</script>
+</body>
+</html>
